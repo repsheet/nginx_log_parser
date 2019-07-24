@@ -32,8 +32,7 @@ int main(int argc, char **argv)
     std::set<std::shared_ptr<ProcessingRule>> rules = {
             std::make_shared<InvalidRequest>(InvalidRequest()),
             std::make_shared<RequestRecorder>(RequestRecorder()),
-            std::make_shared<InvalidHttpMethod>(InvalidHttpMethod(std::set<std::string>{"GET", "POST"})),
-            std::make_shared<LoginBruteForce>(LoginBruteForce(10))
+            std::make_shared<InvalidHttpMethod>(InvalidHttpMethod(std::set<std::string>{"GET", "POST"}))
     };
 
     Reporter::write(cache, actors, rules);

@@ -3,16 +3,14 @@
 #include <utility>
 #include "hiredis/hiredis.h"
 
+#define CACHE_EXPIRY 86400
+
 Cache::Cache(const std::string& host, int port) {
     this->context = redisConnect(host.c_str(), port);
 }
 
 void Cache::blacklist(const std::string& actor, const std::string& reason) {
-    redisCommand(context, "REPSHEET.BLACKLIST %s %s", actor.c_str(), reason.c_str());
-}
-
-void Cache::mark(const std::string &actor, const std::string &reason) {
-    redisCommand(context, "REPSHEET.MARK %s %s", actor.c_str(), reason.c_str());
+    redisCommand(context, "REPSHEET.BLACKLIST %s %s %d", actor.c_str(), reason.c_str(), CACHE_EXPIRY);
 }
 
 void Cache::record_request(const std::string& actor, const std::string& entry) {
