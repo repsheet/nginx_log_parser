@@ -7,10 +7,8 @@
 #include "Reporter.h"
 #include "Timing.h"
 #include "Cache.h"
-#include "Actor.h"
 #include "ProcessingRule.h"
 #include "InvalidRequest.h"
-#include "LoginBruteForce.h"
 #include "InvalidHttpMethod.h"
 #include "RequestRecorder.h"
 

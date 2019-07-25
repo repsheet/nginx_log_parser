@@ -1,4 +1,3 @@
-#include <fstream>
 #include <memory>
 #include "Reporter.h"
 #include "ProcessingRule.h"

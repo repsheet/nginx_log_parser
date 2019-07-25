@@ -1,7 +1,6 @@
-#include <utility>
-
 #pragma once
 
+#include <utility>
 #include "ProcessingRule.h"
 
 class InvalidHttpMethod : public ProcessingRule {
