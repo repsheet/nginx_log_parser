@@ -14,7 +14,7 @@
 
 int main(int argc, char **argv)
 {
-    auto path = "samples";
+    auto path = "/usr/local/nginx/logs";
     Actors actors;
 
     TIME(Processing)

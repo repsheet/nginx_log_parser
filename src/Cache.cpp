@@ -17,12 +17,12 @@ void Cache::record_request(const std::string& actor, const std::string& entry) {
 }
 
 void Cache::flush_requests() {
-    auto *reply = static_cast<redisReply *>(redisCommand(context, "KEYS *:repsheet:ip:requests"));
+    auto *reply = static_cast<redisReply *>(redisCommand(context, "KEYS *:repsheet:requests"));
     size_t i;
     std::vector<std::string> keys;
     if (reply && reply->type == REDIS_REPLY_ARRAY) {
         for (i = 0; i < reply->elements; i++) {
-            keys.emplace_back(reply->str);
+            keys.emplace_back(reply->element[i]->str);
         }
         freeReplyObject(reply);
     }
