@@ -3,6 +3,7 @@
 #include <dirent.h>
 #include <cstring>
 #include <fstream>
+#include <filesystem>
 #include "Util.h"
 #include "Parser.h"
 
@@ -25,18 +26,11 @@ std::string Util::join_string(std::vector<std::string> const &elements, const ch
 
 std::vector<std::string> Util::collect_files(const std::string &path) {
     std::vector<std::string> files;
-
-    DIR *dir;
-    struct dirent *ent;
-    if ((dir = opendir(path.c_str())) != nullptr) {
-        while ((ent = readdir(dir)) != nullptr) {
-            if (!(strcmp(ent->d_name, ".") == 0 || strcmp(ent->d_name, "..") == 0)) {
-                files.emplace_back(path + "/" + ent->d_name);
-            }
+    if (std::filesystem::exists(path)) {
+        for (auto &file : std::filesystem::directory_iterator(path)) {
+            files.push_back(file.path());
         }
-        closedir(dir);
     }
-
     return files;
 }
 
