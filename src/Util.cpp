@@ -21,11 +21,21 @@ std::string Util::join_string(std::vector<std::string> const &elements, const ch
     return os.str();
 }
 
+bool is_log_file(const std::filesystem::directory_entry &file) {
+    return file.path().extension().generic_string().find("log") != std::string::npos;
+}
+
+bool is_access_log(const std::filesystem::directory_entry &file) {
+    return file.path().generic_string().find("access") != std::string::npos;
+}
+
 std::vector<std::string> Util::collect_files(const std::string &path) {
     std::vector<std::string> files;
     if (std::filesystem::exists(path)) {
         for (auto &file : std::filesystem::directory_iterator(path)) {
-            files.push_back(file.path());
+            if (is_log_file(file) && is_access_log(file)) {
+                files.push_back(file.path());
+            }
         }
     }
     return files;
