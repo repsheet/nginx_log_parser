@@ -9,6 +9,7 @@ public:
     Cache(const std::string& host, int port);
     void blacklist(const std::string& actor, const std::string& reason);
     void record_request(const std::string& actor, const std::string& entry);
+    void flush_requests();
 private:
     redisContext *context;
 };

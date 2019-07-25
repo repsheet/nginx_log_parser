@@ -26,6 +26,7 @@ int main(int argc, char **argv)
     );
 
     Cache cache("localhost", 6379);
+    cache.flush_requests();
 
     std::set<std::shared_ptr<ProcessingRule>> rules = {
             std::make_shared<InvalidRequest>(InvalidRequest()),
