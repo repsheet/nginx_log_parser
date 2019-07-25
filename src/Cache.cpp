@@ -1,7 +1,5 @@
-#include "Cache.h"
-
-#include <utility>
 #include "hiredis/hiredis.h"
+#include "Cache.h"
 
 #define CACHE_EXPIRY 86400
 
