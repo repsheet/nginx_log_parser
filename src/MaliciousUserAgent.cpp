@@ -8,27 +8,25 @@ MaliciousUserAgent::MaliciousUserAgent(const std::string &dictionary_file) : Pro
     std::string line;
 
     while (getline(in, line)) {
-        std::cout << line << std::endl;
         dictionary.emplace(line);
     }
 }
 
 void MaliciousUserAgent::process(Cache cache, Actors actors) {
-    for (auto &actor : actors) {
-        auto address = actor.second.address;
+    for (auto & [address, actor] : actors) {
+        if (address.empty()) {
+            continue;
+        }
+
         bool flagged = false;
-        for (auto &user_agent : actor.second.user_agents) {
+        for (auto &user_agent : actor.user_agents) {
             if (flagged) {
                 break;
             }
 
             if (dictionary.find(user_agent) != dictionary.end()) {
                 flagged = true;
-                if (address.empty()) {
-                    std::cout << "[" << reason << "]" " empty address, bypassing" << std::endl;
-                } else {
-                    cache.blacklist(address, reason);
-                }
+                cache.blacklist(address, reason);
             }
         }
     }

@@ -17,7 +17,7 @@ struct Timing {
     ~Timing() {
         auto after = std::chrono::high_resolution_clock::now();
         auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(after - before).count();
-        std::cout << name << " took " << duration << " millis" << std::endl;
+        std::cout << name << " took " << duration << " milliseconds" << std::endl;
     }
 private:
     std::string name;
