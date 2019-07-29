@@ -42,8 +42,8 @@ std::vector<std::string> Util::collect_files(const std::string &path) {
 }
 
 void Util::process_file(const std::string& file,
-                  const LogEntryCallback& success_callback,
-                  const InvalidEntryCallback& error_callback)
+                        const LogEntryCallback& success_callback,
+                        const InvalidEntryCallback& error_callback)
 {
     std::stringstream ss(file);
     std::ifstream in(ss.str());

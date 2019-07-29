@@ -11,6 +11,7 @@
 #include "InvalidRequest.h"
 #include "InvalidHttpMethod.h"
 #include "RequestRecorder.h"
+#include "MaliciousUserAgent.h"
 
 int main(int argc, char **argv)
 {
@@ -31,7 +32,8 @@ int main(int argc, char **argv)
     std::set<std::shared_ptr<ProcessingRule>> rules = {
             std::make_shared<InvalidRequest>(InvalidRequest()),
             std::make_shared<RequestRecorder>(RequestRecorder()),
-            std::make_shared<InvalidHttpMethod>(InvalidHttpMethod(std::set<std::string>{"GET", "POST"}))
+            std::make_shared<InvalidHttpMethod>(InvalidHttpMethod(std::set<std::string>{"GET"})),
+            std::make_shared<MaliciousUserAgent>("data/user_agents.txt")
     };
 
     Reporter::write(cache, actors, rules);
