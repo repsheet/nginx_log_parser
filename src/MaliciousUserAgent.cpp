@@ -24,9 +24,11 @@ void MaliciousUserAgent::process(Cache cache, Actors actors) {
                 break;
             }
 
-            if (dictionary.find(user_agent) != dictionary.end()) {
-                flagged = true;
-                cache.blacklist(address, reason);
+            for (auto &entry : dictionary) {
+                if (user_agent.find(entry) != std::string::npos) {
+                    flagged = true;
+                    cache.blacklist(address, reason);
+                }
             }
         }
     }
