@@ -1,6 +1,6 @@
 #include "InvalidRequest.h"
 
-void InvalidRequest::process(Cache cache, Actors actors) {
+void InvalidRequest::process(Actors actors) {
     for (const auto & [address, actor] : actors) {
         if (address.empty()) {
             continue;
@@ -10,4 +10,12 @@ void InvalidRequest::process(Cache cache, Actors actors) {
             cache.blacklist(address, reason);
         }
     }
+}
+
+void InvalidRequest::consume(LogEntry entry) {
+
+}
+
+void InvalidRequest::subscribe(moodycamel::ConcurrentQueue<LogEntry> queue) {
+
 }

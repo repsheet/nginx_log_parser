@@ -30,10 +30,10 @@ int main(int argc, char **argv)
     cache.flush_requests();
 
     std::set<std::shared_ptr<ProcessingRule>> rules = {
-            std::make_shared<InvalidRequest>(InvalidRequest()),
-            std::make_shared<RequestRecorder>(RequestRecorder()),
-            std::make_shared<InvalidHttpMethod>(InvalidHttpMethod(std::set<std::string>{"GET"})),
-            std::make_shared<MaliciousUserAgent>("data/user_agents.txt")
+            std::make_shared<InvalidRequest>(InvalidRequest(cache)),
+            std::make_shared<RequestRecorder>(RequestRecorder(cache)),
+            std::make_shared<InvalidHttpMethod>(InvalidHttpMethod(cache, std::set<std::string>{"GET"})),
+            std::make_shared<MaliciousUserAgent>(MaliciousUserAgent(cache, "data/user_agents.txt"))
     };
 
     Reporter::write(cache, actors, rules);

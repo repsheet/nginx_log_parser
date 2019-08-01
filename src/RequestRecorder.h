@@ -4,6 +4,13 @@
 
 class RequestRecorder : public ProcessingRule {
 public:
-    explicit RequestRecorder() : ProcessingRule() {}
-    void process(Cache cache, Actors actors) override;
+    explicit RequestRecorder(Cache cache)
+    : cache(cache)
+    , ProcessingRule()
+    {}
+    void process(Actors actors) override;
+    void consume(LogEntry entry) override;
+    void subscribe(moodycamel::ConcurrentQueue<LogEntry> queue) override;
+private:
+    Cache cache;
 };

@@ -1,6 +1,6 @@
 #include "RequestRecorder.h"
 
-void RequestRecorder::process(Cache cache, Actors actors) {
+void RequestRecorder::process(Actors actors) {
     for (const auto & [address, actor] : actors) {
         if (address.empty()) {
             continue;
@@ -14,4 +14,12 @@ void RequestRecorder::process(Cache cache, Actors actors) {
             cache.record_request(address, request.request);
         }
     }
+}
+
+void RequestRecorder::consume(LogEntry entry) {
+
+}
+
+void RequestRecorder::subscribe(moodycamel::ConcurrentQueue<LogEntry> queue) {
+
 }

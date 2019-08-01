@@ -2,7 +2,11 @@
 #include <fstream>
 #include "MaliciousUserAgent.h"
 
-MaliciousUserAgent::MaliciousUserAgent(const std::string &dictionary_file) : ProcessingRule() {
+MaliciousUserAgent::MaliciousUserAgent(
+        Cache cache,
+        const std::string &dictionary_file)
+        : cache(cache)
+        , ProcessingRule() {
     std::stringstream ss(dictionary_file);
     std::ifstream in(ss.str());
     std::string line;
@@ -12,7 +16,7 @@ MaliciousUserAgent::MaliciousUserAgent(const std::string &dictionary_file) : Pro
     }
 }
 
-void MaliciousUserAgent::process(Cache cache, Actors actors) {
+void MaliciousUserAgent::process(Actors actors) {
     for (auto & [address, actor] : actors) {
         if (address.empty()) {
             continue;
@@ -32,4 +36,12 @@ void MaliciousUserAgent::process(Cache cache, Actors actors) {
             }
         }
     }
+}
+
+void MaliciousUserAgent::consume(LogEntry entry) {
+
+}
+
+void MaliciousUserAgent::subscribe(moodycamel::ConcurrentQueue<LogEntry> queue) {
+
 }

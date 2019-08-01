@@ -5,12 +5,17 @@
 
 class InvalidHttpMethod : public ProcessingRule {
 public:
-    explicit InvalidHttpMethod(std::set<std::string> valid_methods)
-    : valid_methods(std::move(valid_methods))
+    explicit InvalidHttpMethod(Cache cache, std::set<std::string> valid_methods)
+    : cache(cache)
+    , valid_methods(std::move(valid_methods))
     , ProcessingRule()
     {}
-    void process(Cache cache, Actors actors) override;
+    void process(Actors actors) override;
+    void consume(LogEntry entry) override;
+    void subscribe(moodycamel::ConcurrentQueue<LogEntry> queue) override;
 private:
     std::string reason = "http.method.invalid";
     std::set<std::string> valid_methods;
+    std::set <std::string> flagged_actors;
+    Cache cache;
 };

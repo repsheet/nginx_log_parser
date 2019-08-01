@@ -1,4 +1,5 @@
 #include "Callbacks.h"
+#include "concurrentqueue.h"
 
 InvalidEntryCallback Callbacks::add_invalid_request(Actors &actors) {
     return [&](auto entry) {
@@ -44,5 +45,12 @@ LogEntryCallback Callbacks::add_request(Actors &actors) {
                 actor->second.http_method_to_count.insert(std::make_pair(entry.method, 1));
             }
         }
+    };
+}
+
+template<typename T>
+std::function<void(T)> Callbacks::add_to_channel(moodycamel::ConcurrentQueue<T> queue) {
+    return [&](auto entry) {
+        queue.enqueue(entry);
     };
 }
